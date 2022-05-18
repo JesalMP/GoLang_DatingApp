@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -190,7 +189,7 @@ func initialMigration() {
 // MAIN FUNCTION
 
 func main() {
-	fmt.Println("Go ORM Tutorial")
+	fmt.Println("LETS GOOOOO")
 
 	initialMigration()
 	handleRequests()
