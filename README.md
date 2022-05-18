@@ -34,22 +34,22 @@
 - After connecting to data base and running the initialMigration() function, 2 tables are generated according to database attributes
 
 
-### GetAvailableMatches endpoint (localhost:8081/availablematches/)
-	GET Method
-	Use of Hashmap has been made to form pairs of userIDs who like each other and then data of those respective ids are extracted from users database.
-	JSON array of 2 users is returned.
+### <u> GetAvailableMatches endpoint (localhost:8081/availablematches/)
+GET Method
+Use of Hashmap has been made to form pairs of userIDs who like each other and then data of those respective ids are extracted from users database.
+JSON array of 2 users is returned.
 
-### GetUsersInDistance endpoint (localhost:8081/usersindistance/)
-	GET Method
-	endpoint format : /usersindistance/{userid}/{distance}
-	linear search in users database is made to find users within distance.
-	JSON array of all users within givin {distance} of user with ID = {userid}
+### <u> GetUsersInDistance endpoint (localhost:8081/usersindistance/)
+- GET Method
+- endpoint format : /usersindistance/{userid}/{distance}
+- linear search in users database is made to find users within distance.
+- JSON array of all users within givin {distance} of user with ID = {userid}
 
-### GetUsersWithGivenStringInName (localhost:8081/usernamesearch/)
-	GET Method
-	endpoint format : /usernamesearch/{nametag}
-	linear search in users database is made to find users within {nametag} in their name as a substring.
-	names are compared after converting to lowercase for maximum efficient search.
-	substring method of strings library in GoLang is used.
-	JSON array of all users with {nametag} as a substring in their name is returned.
+### <u> GetUsersWithGivenStringInName (localhost:8081/usernamesearch/)
+- GET Method
+- endpoint format : /usernamesearch/{nametag}
+- linear search in users database is made to find users within {nametag} in their name as a substring.
+- names are compared after converting to lowercase for maximum efficient search.
+- substring method of strings library in GoLang is used.
+- JSON array of all users with {nametag} as a substring in their name is returned.
 
