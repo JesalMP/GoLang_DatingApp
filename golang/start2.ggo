@@ -1,0 +1,157 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/gorilla/mux"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
+
+type users struct {
+	gorm.Model
+	Id       int
+	Name     string
+	Location int
+	Gender   string
+	Email    string
+}
+type likes struct {
+	gorm.Model
+	Id           int
+	Who_likes    int
+	Who_is_liked int
+}
+
+var dsn string = "host=localhost user=postgres password=jes123 dbname=public1 port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+
+// func allUsers(w http.ResponseWriter, r *http.Request) {
+// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		panic("failed to connect database")
+// 	}
+// 	sqlDB, err := db.DB()
+
+// 	var users []User
+// 	db.Find(&users)
+// 	fmt.Println("{}", users)
+
+// 	json.NewEncoder(w).Encode(users)
+// 	sqlDB.Close()
+// }
+
+// func newUser(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("New User Endpoint Hit")
+
+// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		panic("failed to connect database")
+// 	}
+// 	sqlDB, err := db.DB()
+
+// 	vars := mux.Vars(r)
+// 	name := vars["name"]
+// 	email := vars["email"]
+
+// 	fmt.Println(name)
+// 	fmt.Println(email)
+
+// 	db.Create(&User{Name: name, Email: email})
+// 	fmt.Fprintf(w, "New User Successfully Created")
+// 	sqlDB.Close()
+// }
+
+func match(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("MATCH HIT")
+
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  dsn,
+		PreferSimpleProtocol: true,
+	}), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("failed to connect database")
+	}
+	sqlDB, err := db.DB()
+	sqlDB.Close()
+	var likes []likes
+	db.Find(&likes)
+	fmt.Println("{}", likes)
+
+	json.NewEncoder(w).Encode(likes)
+
+}
+
+// func deleteUser(w http.ResponseWriter, r *http.Request) {
+
+// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		panic("failed to connect database")
+// 	}
+// 	sqlDB, err := db.DB()
+
+// 	vars := mux.Vars(r)
+// 	name := vars["name"]
+
+// 	var user User
+// 	db.Where("name = ?", name).Find(&user)
+// 	db.Delete(&user)
+
+// 	fmt.Fprintf(w, "Successfully Deleted User")
+// 	sqlDB.Close()
+// }
+
+// func updateUser(w http.ResponseWriter, r *http.Request) {
+
+// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		panic("failed to connect database")
+// 	}
+// 	sqlDB, err := db.DB()
+
+// 	vars := mux.Vars(r)
+// 	name := vars["name"]
+// 	email := vars["email"]
+
+// 	var user User
+// 	db.Where("name = ?", name).Find(&user)
+
+// 	user.Email = email
+
+// 	db.Save(&user)
+// 	fmt.Fprintf(w, "Successfully Updated User")
+// 	sqlDB.Close()
+// }
+
+func handleRequests() {
+	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/matches", match).Methods("GET")
+	// myRouter.HandleFunc("/user/{name}", deleteUser).Methods("DELETE")
+	// myRouter.HandleFunc("/user/{name}/{email}", updateUser).Methods("PUT")
+	// myRouter.HandleFunc("/user/{name}/{email}", newUser).Methods("POST")
+	log.Fatal(http.ListenAndServe(":8081", myRouter))
+}
+
+func main() {
+	fmt.Println("Go ORM Tutorial")
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err.Error())
+		panic("failed to connect database")
+	}
+	sqlDB, err := db.DB()
+
+	// Migrate the schema
+	//db.AutoMigrate(&User{})
+
+	handleRequests()
+	sqlDB.Close()
+}
