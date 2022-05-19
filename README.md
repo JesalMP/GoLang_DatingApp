@@ -32,6 +32,8 @@
 		localhost:8081/usersindistance/
 		localhost:8081/usernamesearch/
 - After connecting to data base and running the initialMigration() function, 2 tables are generated according to database attributes
+
+- 
 ![image](https://user-images.githubusercontent.com/84318539/169162056-80007db3-50ba-41b9-933c-ce103375fd68.png)
 ![image](https://user-images.githubusercontent.com/84318539/169162125-10d841b8-2523-4bb6-b317-45e9899764e5.png)
 ![image](https://user-images.githubusercontent.com/84318539/169162165-eee5c0aa-328b-4baf-a0a4-104c8a94da7b.png)
