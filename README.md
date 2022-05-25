@@ -1,4 +1,3 @@
-# Trademarkia_GoLang_Task_DatingApp
 
 # Stumble Dating app Backend in GoLang
 
